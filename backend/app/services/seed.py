@@ -28,3 +28,20 @@ def seed_if_empty(db: Session) -> None:
         ]
     )
     db.commit()
+
+
+def delete_orphaned_records(db: Session) -> int:
+    """Remove records whose hosted zone no longer exists.
+
+    Repairs rows left behind before zone deletion explicitly removed its
+    records (SQLite does not enforce ON DELETE CASCADE by default). Only
+    touches rows unreachable by every API path; returns the removed count.
+    """
+    orphans = db.query(DNSRecord).filter(
+        ~db.query(HostedZone.id).filter(HostedZone.id == DNSRecord.zone_id).exists()
+    )
+    count = orphans.count()
+    if count:
+        orphans.delete(synchronize_session=False)
+        db.commit()
+    return count

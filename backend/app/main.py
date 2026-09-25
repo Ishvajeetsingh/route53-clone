@@ -7,13 +7,16 @@ from app.config import settings
 from app.database import Base, SessionLocal, engine
 from app.models import dns as _models  # noqa: F401  (register tables)
 from app.routers import auth, hosted_zones, records, stats
-from app.services.seed import seed_if_empty
+from app.services.seed import delete_orphaned_records, seed_if_empty
 
 Base.metadata.create_all(bind=engine)
 try:
     db = SessionLocal()
     try:
         seed_if_empty(db)
+        removed = delete_orphaned_records(db)
+        if removed:
+            print(f"Removed {removed} orphaned DNS record(s) with no hosted zone.")
     finally:
         db.close()
 except Exception:

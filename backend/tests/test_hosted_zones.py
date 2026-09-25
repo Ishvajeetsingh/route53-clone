@@ -67,6 +67,7 @@ def test_pagination(client, auth_headers):
 
 def test_delete_zone_cascades_records(client, auth_headers, zone):
     zid = zone["id"]
+    before = client.get("/api/stats/summary", headers=auth_headers).json()
     rec = client.post(
         f"/api/hosted-zones/{zid}/records",
         json={"name": "www.example.com.", "type": "A", "values": ["192.0.2.9"], "ttl": 300, "routing_policy": "Simple"},
@@ -78,6 +79,10 @@ def test_delete_zone_cascades_records(client, auth_headers, zone):
     assert client.get(f"/api/hosted-zones/{zid}", headers=auth_headers).status_code == 404
     # Records of a deleted zone are gone with it (zone lookup itself 404s).
     assert client.get(f"/api/hosted-zones/{zid}/records", headers=auth_headers).status_code == 404
+    # No orphan rows may remain: seeded NS/SOA plus the created record are gone.
+    after = client.get("/api/stats/summary", headers=auth_headers).json()
+    assert after["hosted_zones"] == before["hosted_zones"] - 1
+    assert after["records"] == before["records"] - 2
 
 
 def test_missing_zone_404(client, auth_headers):

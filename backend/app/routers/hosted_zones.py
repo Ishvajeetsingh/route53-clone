@@ -110,6 +110,10 @@ def delete_zone(zone_id: str, db: Session = Depends(get_db), _s=Depends(get_sess
     zone = db.get(HostedZone, zone_id)
     if not zone:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Hosted zone not found")
-    db.delete(zone)  # records cascade via relationship + FK ondelete
+    # Explicit child delete in the same transaction: SQLite does not enforce
+    # ON DELETE CASCADE without PRAGMA foreign_keys, so records must be
+    # removed here rather than relying on the database.
+    db.query(DNSRecord).filter(DNSRecord.zone_id == zone_id).delete(synchronize_session=False)
+    db.delete(zone)
     db.commit()
     return None
