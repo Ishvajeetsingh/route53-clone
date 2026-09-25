@@ -82,7 +82,7 @@ route53-clone/
 
 The browser talks to the Next.js frontend, which calls the FastAPI REST API, which reads and writes SQLite through SQLAlchemy. The frontend keeps no hardcoded zone or record data; everything on screen comes from the API.
 
-Creating a hosted zone also creates its apex NS and SOA records, the same way Route 53 starts every zone with them. Deleting a hosted zone deletes all of its records through a foreign-key cascade, and the delete dialog says so explicitly.
+Creating a hosted zone also creates its apex NS and SOA records, the same way Route 53 starts every zone with them. Deleting a hosted zone deletes all of its DNS records in the same transaction, and the delete dialog makes that behavior explicit.
 
 ## Database
 
@@ -91,7 +91,7 @@ Two tables:
 - **HostedZone** — `id` (Route 53-style `Z...` string), `name`, `description`, `type` (Public/Private), `created_at`, `updated_at`.
 - **DNSRecord** — `id`, `zone_id` (FK to HostedZone with `ON DELETE CASCADE`), `name`, `type`, `values` (JSON list), `ttl`, `routing_policy`, `description`, `created_at`, `updated_at`.
 
-One zone has many records. Record counts shown in the UI are computed per zone. The demo zone is seeded only when the database is completely empty, so deleting it does not bring it back on restart.
+One zone has many records. Record counts shown in the UI are computed per zone. A demo zone is seeded on startup when the database has no hosted zones, providing useful data for the initial console view.
 
 ## API
 
