@@ -4,7 +4,7 @@ A Route 53-inspired DNS management console I built for this assignment with Next
 
 ## Demo
 
-Live demo: https://frontend-btfwf41jz-ishvajeetsingh.vercel.app
+Live demo: https://frontend-ishvajeetsingh.vercel.app
 API docs: https://route53-clone-production-5b4c.up.railway.app/api/docs
 
 ## What works
@@ -198,7 +198,7 @@ Current status: 62 backend tests passing, lint clean, TypeScript check clean, pr
 
 ## Deployment
 
-The frontend (Vercel) and backend (Railway, SQLite on a persistent volume at `DATABASE_URL=sqlite:////data/route53.db`) deploy separately: Next.js to any Node host, FastAPI to any Python host with `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Because the assignment requires SQLite, the backend host needs a persistent disk or volume, with `DATABASE_URL` pointed at it. Point `NEXT_PUBLIC_API_URL` at the backend URL and add the frontend origin to `ALLOWED_ORIGINS`. Live URLs: https://frontend-btfwf41jz-ishvajeetsingh.vercel.app, docs: https://route53-clone-production-5b4c.up.railway.app/api/docs. Repository: https://github.com/Ishvajeetsingh/route53-clone.
+The frontend (Vercel) and backend (Railway, SQLite on a persistent volume at `DATABASE_URL=sqlite:////data/route53.db`) deploy separately: Next.js to any Node host, FastAPI to any Python host with `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Because the assignment requires SQLite, the backend host needs a persistent disk or volume, with `DATABASE_URL` pointed at it. Point `NEXT_PUBLIC_API_URL` at the backend URL and add the frontend origin to `ALLOWED_ORIGINS`. Live URLs: https://frontend-ishvajeetsingh.vercel.app, docs: https://route53-clone-production-5b4c.up.railway.app/api/docs. Repository: https://github.com/Ishvajeetsingh/route53-clone.
 
 ## Limitations
 
