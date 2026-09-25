@@ -1,0 +1,27 @@
+# Python / FastAPI
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.env
+route53.db
+*.db
+*.sqlite
+*.sqlite3
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+*.log
+.env
+.env.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
