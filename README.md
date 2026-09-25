@@ -21,13 +21,6 @@ API docs: https://route53-clone-production-5b4c.up.railway.app/api/docs
 - SQLite persistence across backend restarts
 - Route 53-style console layout: dark header, service sidebar, dense tables, breadcrumbs
 
-## Screenshots
-
-- Dashboard: `screenshots/dashboard.png` (to be added)
-- Hosted zones: `screenshots/hosted-zones.png` (to be added)
-- Zone detail with records: `screenshots/records.png` (to be added)
-- Create record dialog: `screenshots/create-record.png` (to be added)
-
 ## Tech stack
 
 Frontend:
