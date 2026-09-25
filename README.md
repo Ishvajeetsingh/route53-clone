@@ -4,8 +4,8 @@ A Route 53-inspired DNS management console I built for this assignment with Next
 
 ## Demo
 
-Live demo: `LIVE_DEMO_URL`
-API docs: `API_DOCS_URL`
+Live demo: https://frontend-btfwf41jz-ishvajeetsingh.vercel.app
+API docs: https://route53-clone-production-5b4c.up.railway.app/api/docs
 
 ## What works
 
@@ -169,7 +169,7 @@ No secrets are needed to run this project.
 
 ## Tests
 
-Backend (58 tests, isolated test database, dev database untouched):
+Backend (62 tests, isolated test database, dev database untouched):
 
 ```bash
 cd backend
@@ -186,7 +186,7 @@ npx tsc --noEmit
 npm run build
 ```
 
-Current status: 58 backend tests passing, lint clean, TypeScript check clean, production build succeeds. I also clicked through login, zone CRUD, record CRUD, validation errors, search/filter, and persistence manually in the browser; there is no automated browser suite.
+Current status: 62 backend tests passing, lint clean, TypeScript check clean, production build succeeds. I also clicked through login, zone CRUD, record CRUD, validation errors, search/filter, and persistence manually in the browser; there is no automated browser suite.
 
 ## A few implementation decisions
 
@@ -198,7 +198,7 @@ Current status: 58 backend tests passing, lint clean, TypeScript check clean, pr
 
 ## Deployment
 
-The frontend and backend deploy separately: Next.js to any Node host, FastAPI to any Python host with `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Because the assignment requires SQLite, the backend host needs a persistent disk or volume, with `DATABASE_URL` pointed at it. Point `NEXT_PUBLIC_API_URL` at the backend URL and add the frontend origin to `ALLOWED_ORIGINS`. Live URLs: `LIVE_DEMO_URL`, docs: `API_DOCS_URL`.
+The frontend (Vercel) and backend (Railway, SQLite on a persistent volume at `DATABASE_URL=sqlite:////data/route53.db`) deploy separately: Next.js to any Node host, FastAPI to any Python host with `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Because the assignment requires SQLite, the backend host needs a persistent disk or volume, with `DATABASE_URL` pointed at it. Point `NEXT_PUBLIC_API_URL` at the backend URL and add the frontend origin to `ALLOWED_ORIGINS`. Live URLs: https://frontend-btfwf41jz-ishvajeetsingh.vercel.app, docs: https://route53-clone-production-5b4c.up.railway.app/api/docs. Repository: https://github.com/Ishvajeetsingh/route53-clone.
 
 ## Limitations
 
